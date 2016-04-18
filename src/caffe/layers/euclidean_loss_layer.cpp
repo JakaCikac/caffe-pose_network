@@ -23,7 +23,18 @@ void EuclideanLossLayer<Dtype>::Forward_cpu(const vector<Blob<Dtype>*>& bottom,
       bottom[0]->cpu_data(),
       bottom[1]->cpu_data(),
       diff_.mutable_cpu_data());
-  Dtype dot = caffe_cpu_dot(count, diff_.cpu_data(), diff_.cpu_data());
+  // Apply weights.
+  if (bottom.size() > 2) {
+    caffe_mul(
+      count,
+      diff_.cpu_data(),
+      bottom[2]->cpu_data(),
+      diff_.mutable_cpu_data());
+  }
+  Dtype dot = caffe_cpu_dot(
+      count, 
+      diff_.cpu_data(), 
+      diff_.cpu_data());
   Dtype loss = dot / bottom[0]->num() / Dtype(2);
   top[0]->mutable_cpu_data()[0] = loss;
 }
