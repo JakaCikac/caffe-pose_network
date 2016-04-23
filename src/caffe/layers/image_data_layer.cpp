@@ -37,11 +37,26 @@ void ImageDataLayer<Dtype>::DataLayerSetUp(const vector<Blob<Dtype>*>& bottom,
   const string& source = this->layer_param_.image_data_param().source();
   LOG(INFO) << "Opening file " << source;
   std::ifstream infile(source.c_str());
-  string filename;
-  int label;
-  while (infile >> filename >> label) {
-    lines_.push_back(std::make_pair(filename, label));
+  std::string line;
+  int label_count = 0;
+  while (std::getline(infile, line)) {
+    std::istringstream iss(line);
+    std::string filename;
+    std::vector<Dtype> labels;
+    if (iss >> filename) {
+      Dtype value;
+      while (iss >> value) {
+        labels.push_back(value);
+      }
+      if (label_count == 0) {
+          label_count = labels.size();
+      } else if (label_count != labels.size()) {
+        LOG(FATAL) << "Label count mismatch: " << filename;
+      }
+      lines_.push_back(std::make_pair(filename, labels));
+    }
   }
+  LOG(INFO) << "Label count: " << label_count;
 
   if (this->layer_param_.image_data_param().shuffle()) {
     // randomly shuffle data
@@ -81,7 +96,9 @@ void ImageDataLayer<Dtype>::DataLayerSetUp(const vector<Blob<Dtype>*>& bottom,
       << top[0]->channels() << "," << top[0]->height() << ","
       << top[0]->width();
   // label
-  vector<int> label_shape(1, batch_size);
+  vector<int> label_shape(2);
+  label_shape[0] = batch_size;
+  label_shape[1] = label_count;
   top[1]->Reshape(label_shape);
   for (int i = 0; i < this->PREFETCH_COUNT; ++i) {
     this->prefetch_[i].label_.Reshape(label_shape);
@@ -127,6 +144,8 @@ void ImageDataLayer<Dtype>::load_batch(Batch<Dtype>* batch) {
   Dtype* prefetch_data = batch->data_.mutable_cpu_data();
   Dtype* prefetch_label = batch->label_.mutable_cpu_data();
 
+  const int label_count = lines_[lines_id_].second.size();
+
   // datum scales
   const int lines_size = lines_.size();
   for (int item_id = 0; item_id < batch_size; ++item_id) {
@@ -144,7 +163,8 @@ void ImageDataLayer<Dtype>::load_batch(Batch<Dtype>* batch) {
     this->data_transformer_->Transform(cv_img, &(this->transformed_data_));
     trans_time += timer.MicroSeconds();
 
-    prefetch_label[item_id] = lines_[lines_id_].second;
+    caffe_copy(label_count, &lines_[lines_id_].second[0], &prefetch_label[item_id * label_count]);
+
     // go to the next iter
     lines_id_++;
     if (lines_id_ >= lines_size) {
