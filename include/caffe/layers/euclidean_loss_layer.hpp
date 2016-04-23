@@ -44,6 +44,7 @@ class EuclideanLossLayer : public LossLayer<Dtype> {
       : LossLayer<Dtype>(param), diff_() {}
   virtual void Reshape(const vector<Blob<Dtype>*>& bottom,
       const vector<Blob<Dtype>*>& top);
+  virtual inline int ExactNumBottomBlobs() const { return -1; }
 
   virtual inline const char* type() const { return "EuclideanLoss"; }
   /**
