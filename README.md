@@ -1,3 +1,21 @@
+# About this fork
+
+This Caffe fork was created on April 18, 2015. The changes to the original are listed below.
+
+### 1. Weighted Euclidean (L2) loss 
+
+The loss function computed in *EuclideanLossLayer* is changed to weighted Euclidean loss, which enables coordinate specific loss calculation.
+
+[![ui](http://www.ee.oulu.fi/~malinna/images/posenet/weighted_euclidean_L2_loss.gif)](http://www.ee.oulu.fi/~malinna/posenet/weighted_euclidean_L2_loss.gif)
+
+### 2. Multi-label support
+
+Changed the *ImageDataLayer* to support multiple labels so that it can be used for regression tasks. The input file supports the following format, where the values can be, for example, coordinates (x1, y1, x2, y2, ....)
+
+    01594.jpg 0.3284 0.8941 0.5021 0.7479 0.4534 0.5106
+    01741.jpg 0.7152 0.9104 0.6800 0.7024 0.6288 0.5456
+    01320.jpg 0.1612 0.4908 0.2821 0.5348 0.4835 0.3700
+
 # Caffe
 
 [![Build Status](https://travis-ci.org/BVLC/caffe.svg?branch=master)](https://travis-ci.org/BVLC/caffe)
