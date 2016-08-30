@@ -6,7 +6,7 @@ This Caffe fork was created on April 18, 2015. The changes to the original are l
 
 The loss function computed in *EuclideanLossLayer* is changed to weighted Euclidean loss, which enables coordinate specific loss calculation.
 
-[![ui](http://www.ee.oulu.fi/~malinna/images/posenet/weighted_euclidean_L2_loss.gif)](http://www.ee.oulu.fi/~malinna/posenet/weighted_euclidean_L2_loss.gif)
+[![ui](http://www.ee.oulu.fi/~malinna/images/posenet/weighted_euclidean_L2_loss.gif)](http://www.ee.oulu.fi/~malinna/images/posenet/weighted_euclidean_L2_loss.gif)
 
 ### 2. Multi-label support
 
