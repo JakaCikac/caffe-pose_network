@@ -306,7 +306,7 @@ message ParamSpec {
 // NOTE
 // Update the next available ID when you add a new LayerParameter field.
 //
-// LayerParameter next available layer-specific ID: 145 (last added: crop_param)
+// LayerParameter next available layer-specific ID: 146 (last added: posenet_accuracy_param)
 message LayerParameter {
   optional string name = 1; // the layer name
   optional string type = 2; // the layer type
@@ -381,6 +381,7 @@ message LayerParameter {
   optional MemoryDataParameter memory_data_param = 119;
   optional MVNParameter mvn_param = 120;
   optional PoolingParameter pooling_param = 121;
+  optional PosenetAccuracyParameter posenet_accuracy_param = 145;
   optional PowerParameter power_param = 122;
   optional PReLUParameter prelu_param = 131;
   optional PythonParameter python_param = 130;
@@ -466,6 +467,14 @@ message AccuracyParameter {
 
   // If specified, ignore instances with the given label.
   optional int32 ignore_label = 3;
+}
+
+message PosenetAccuracyParameter {
+  optional uint32 image_width = 1 [default = 1];
+  optional uint32 image_height = 2 [default = 1];
+  required float distance_start = 3;
+  required float distance_stop = 4;
+  optional float distance_step = 5 [default = 1.0];
 }
 
 message ArgMaxParameter {

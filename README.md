@@ -1,6 +1,6 @@
 # About this fork
 
-This Caffe fork was created on April 18, 2015. The changes to the original are listed below.
+This Caffe fork was created on April 18, 2016. The changes to the original are listed below.
 
 ### 1. Weighted Euclidean (L2) loss 
 
@@ -15,6 +15,10 @@ Changed the *ImageDataLayer* to support multiple labels so that it can be used f
     01594.jpg 0.3284 0.8941 0.5021 0.7479 0.4534 0.5106
     01741.jpg 0.7152 0.9104 0.6800 0.7024 0.6288 0.5456
     01320.jpg 0.1612 0.4908 0.2821 0.5348 0.4835 0.3700
+
+### 3. New accuracy layer
+
+Added *PosenetAccuracyLayer* for logging accuracies and errors of coordinate predictions (xy) while training.
 
 # Caffe
 
