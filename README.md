@@ -26,7 +26,7 @@ Integrated Faster R-CNN code so that this fork supports Faster R-CNN for object 
 
 ### Instructions
 
-Run `setup_posenet.m` first to build Faster R-CNN and download models.
+After building Caffe, go to folder `matlab/posenet` with MATLAB and run `setup_posenet.m` to build Faster R-CNN and download trained models.
 
 # Caffe
 
