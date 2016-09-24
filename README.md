@@ -20,6 +20,14 @@ Changed the *ImageDataLayer* to support multiple labels so that it can be used f
 
 Added *PosenetAccuracyLayer* for logging accuracies and errors of coordinate predictions (xy) while training.
 
+### 4. Faster R-CNN
+
+Integrated Faster R-CNN code so that this fork supports Faster R-CNN for object detection.
+
+### Instructions
+
+Run `setup_posenet.m` first to build Faster R-CNN and download models.
+
 # Caffe
 
 [![Build Status](https://travis-ci.org/BVLC/caffe.svg?branch=master)](https://travis-ci.org/BVLC/caffe)
